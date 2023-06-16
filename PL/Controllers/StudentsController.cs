@@ -56,7 +56,7 @@ public class StudentsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Post([FromQuery] AddStudentDto dto, 
-                                          [FromBody] List<SubjectDto> subjects)
+                                          [FromBody] List<AddStudentSubjectDto> subjects)
     {
         if (ModelState.IsValid)
         {

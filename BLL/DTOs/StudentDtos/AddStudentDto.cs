@@ -15,7 +15,7 @@ public class AddStudentDto
     public DateTime BirthDate { get; set; }
     [Required, StringLength(15)]
     public string PhoneNumber { get; set; } = string.Empty;
-    public List<SubjectDto> StudentSubjects = new();
+    public List<AddStudentSubjectDto> StudentSubjects = new();
 
     public static implicit operator Student(AddStudentDto student)
         => new Student()
@@ -29,7 +29,8 @@ public class AddStudentDto
             StudentSubjects = student.StudentSubjects.Select(s => 
                                       new StudentSubject()
                                       {
-                                          SubjectId = s.Id
+                                          SubjectId = s.subjectId,
+                                          Score = s.score
                                       }).ToList()
         };
 }

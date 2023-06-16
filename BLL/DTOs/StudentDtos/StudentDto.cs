@@ -12,7 +12,7 @@ public class StudentDto : BaseDto
     public DateOnly BirthDate { get; set; }
     public string PhoneNumber { get; set; } = string.Empty;
 
-    public List<SubjectDto> Subjects = new();
+    public List<StudentSubjectDto> Subjects = new();
 
     public static implicit operator StudentDto(Student student)
         => new StudentDto()
@@ -22,7 +22,7 @@ public class StudentDto : BaseDto
             LastName = student.LastName,
             BirthDate = student.BirthDate,
             PhoneNumber = student.PhoneNumber,
-            Subjects = student.StudentSubjects.Select(i => (SubjectDto)i.Subject)
+            Subjects = student.StudentSubjects.Select(i => (StudentSubjectDto)i)
                                               .ToList()
         };
 }
