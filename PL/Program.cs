@@ -31,6 +31,23 @@ builder.Services.AddTransient<ITeacherService, TeacherService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<ISubjectService, SubjectService>();
 
+//setup CORS
+
+const string CORSOpenPolicy = "OpenCORSPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+      name: CORSOpenPolicy,
+      builder =>
+      {
+          builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+      });
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -39,6 +56,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(CORSOpenPolicy);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

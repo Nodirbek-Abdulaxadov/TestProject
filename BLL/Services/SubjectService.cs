@@ -1,4 +1,6 @@
-﻿using BLL.DTOs.SubjectDtos;
+﻿using BLL.DTOs.StudentDtos;
+using BLL.DTOs.SubjectDtos;
+using BLL.DTOs.TeacherDtos;
 using BLL.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
@@ -23,7 +25,24 @@ public class SubjectService : ISubjectService
     public async Task<IEnumerable<SubjectDto>> GetAllAsync()
     {
         var subjects = await _unitOfWork.Subjects.GetAllAsync();
-        return subjects.Select(s => (SubjectDto)s);
+        var subjectDtos = subjects.Select(s => (SubjectDto)s);
+        var result = new List<SubjectDto>();
+
+        foreach (var subject in subjectDtos)
+        {
+            subject.StudentsCount = (await _unitOfWork.Students.GetAllAsync())
+                .Where(s => s.StudentSubjects.Any(i => i.SubjectId == subject.Id))
+                .Select(s => (StudentViewDto)s)
+                .Count();
+            subject.TeachersCount = (await _unitOfWork.Teachers.GetAllAsync())
+                .Where(t => t.TeacherSubjects.Any(i => i.SubjectId == subject.Id))
+                .Select(t => (TeacherViewDto)t)
+                .Count();
+
+            result.Add(subject);
+        }
+
+        return result;
     }
 
     public async Task<SubjectDto> GetByIdAsync(int id)

@@ -1,6 +1,9 @@
 ﻿using BLL.DTOs.SubjectDtos;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PL.Controllers;
 
@@ -19,7 +22,13 @@ public class SubjectsController : ControllerBase
     public async Task<IActionResult> Get()
     {
         var subjects = await _subjectService.GetAllAsync();
-        return Ok(subjects);
+        var json = JsonConvert.SerializeObject(subjects, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
+        return Ok(json);
     }
 
     [HttpGet("{id}")]

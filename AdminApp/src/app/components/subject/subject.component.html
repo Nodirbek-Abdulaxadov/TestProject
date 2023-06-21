@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+      <h5 class="mb-0">Subjects table</h5>
+      <form class="ms-auto position-relative">
+        <div
+          class="position-absolute top-50 translate-middle-y search-icon px-3"
+        >
+          <i class="bi bi-search"></i>
+        </div>
+        <input class="form-control ps-5" type="text" placeholder="search" />
+      </form>
+    </div>
+    <div class="table-responsive mt-3">
+      <table class="table align-middle">
+        <thead class="table-secondary">
+          <tr>
+            <th>#Id</th>
+            <th>Name</th>
+            <th>Teachers Count</th>            
+            <th>Students Count</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let subject of subjects | async">
+            <td>{{subject.Id}}</td>
+            <td>{{subject.Name}}</td>
+            <td>{{subject.StudentsCount}}</td>
+            <td>{{subject.TeachersCount}}</td>
+            <td>
+              <div class="table-actions d-flex align-items-center gap-3 fs-6">
+                <a
+                  href="javascript:;"
+                  class="text-warning"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit"
+                  ><i class="bi bi-pencil-fill"></i
+                ></a>
+                <a
+                  href="javascript:;"
+                  class="text-danger"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Delete"
+                  ><i class="bi bi-trash-fill"></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
